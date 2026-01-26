@@ -46,7 +46,7 @@ a simple demo.
 uv python main.py
 ```
 
-## Model Weights (Hugging Face)
+## Model Weights (HuggingFace)
 
 | Base Model | DART Adapted Weights | N-gram Model |
 | --- | --- | --- |
