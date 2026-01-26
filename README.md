@@ -48,23 +48,85 @@ uv python main.py
 
 ## Model Weights (HuggingFace)
 
-| Base Model | DART Adapted Weights | N-gram Model |
-| --- | --- | --- |
-| [Qwen3-1.7B](https://huggingface.co/Qwen/Qwen3-1.7B) | [fvliang/qwen1.7b-dart](https://huggingface.co/fvliang/qwen1.7b-dart) | [fvliang/dart-qwen3-ngram](https://huggingface.co/fvliang/dart-qwen3-ngram) |
-| [Qwen3-4B](https://huggingface.co/Qwen/Qwen3-4B) | [fvliang/qwen4b-dart](https://huggingface.co/fvliang/qwen4b-dart) | [fvliang/dart-qwen3-ngram](https://huggingface.co/fvliang/dart-qwen3-ngram) |
-| [Qwen3-8B](https://huggingface.co/Qwen/Qwen3-8B) | [fvliang/qwen8b-dart](https://huggingface.co/fvliang/qwen8b-dart) | [fvliang/dart-qwen3-ngram](https://huggingface.co/fvliang/dart-qwen3-ngram) |
-| [Qwen3-14B](https://huggingface.co/Qwen/Qwen3-14B) | [fvliang/qwen14b-dart](https://huggingface.co/fvliang/qwen14b-dart) | [fvliang/dart-qwen3-ngram](https://huggingface.co/fvliang/dart-qwen3-ngram) |
-| [Qwen3-32B](https://huggingface.co/Qwen/Qwen3-32B) | [fvliang/qwen32b-dart](https://huggingface.co/fvliang/qwen32b-dart) | [fvliang/dart-qwen3-ngram](https://huggingface.co/fvliang/dart-qwen3-ngram) |
+<div align="center">
+<table>
+  <thead>
+    <tr>
+      <th>Base Model</th>
+      <th>DART Adapted Weights</th>
+      <th>N-gram Model</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://huggingface.co/Qwen/Qwen3-1.7B">Qwen3-1.7B</a></td>
+      <td><a href="https://huggingface.co/fvliang/qwen1.7b-dart">fvliang/qwen1.7b-dart</a></td>
+      <td><a href="https://huggingface.co/fvliang/dart-qwen3-ngram">fvliang/dart-qwen3-ngram</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://huggingface.co/Qwen/Qwen3-4B">Qwen3-4B</a></td>
+      <td><a href="https://huggingface.co/fvliang/qwen4b-dart">fvliang/qwen4b-dart</a></td>
+      <td><a href="https://huggingface.co/fvliang/dart-qwen3-ngram">fvliang/dart-qwen3-ngram</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://huggingface.co/Qwen/Qwen3-8B">Qwen3-8B</a></td>
+      <td><a href="https://huggingface.co/fvliang/qwen8b-dart">fvliang/qwen8b-dart</a></td>
+      <td><a href="https://huggingface.co/fvliang/dart-qwen3-ngram">fvliang/dart-qwen3-ngram</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://huggingface.co/Qwen/Qwen3-14B">Qwen3-14B</a></td>
+      <td><a href="https://huggingface.co/fvliang/qwen14b-dart">fvliang/qwen14b-dart</a></td>
+      <td><a href="https://huggingface.co/fvliang/dart-qwen3-ngram">fvliang/dart-qwen3-ngram</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://huggingface.co/Qwen/Qwen3-32B">Qwen3-32B</a></td>
+      <td><a href="https://huggingface.co/fvliang/qwen32b-dart">fvliang/qwen32b-dart</a></td>
+      <td><a href="https://huggingface.co/fvliang/dart-qwen3-ngram">fvliang/dart-qwen3-ngram</a></td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 ## Model Weights (ModelScope)
 
-| Base Model | DART Adapted Weights | N-gram Model |
-| --- | --- | --- |
-| [Qwen3-1.7B](https://modelscope.cn/models/Qwen/Qwen3-1.7B) | [fvliang/Qwen3-1.7B-dart](https://modelscope.cn/models/fvliang/Qwen3-1.7B-dart) | [fvliang/dart-qwen3-ngram](https://modelscope.cn/models/fvliang/dart-qwen3-ngram) |
-| [Qwen3-4B](https://modelscope.cn/models/Qwen/Qwen3-4B) | [fvliang/Qwen3-4B-dart](https://modelscope.cn/models/fvliang/Qwen3-4B-dart) | [fvliang/dart-qwen3-ngram](https://modelscope.cn/models/fvliang/dart-qwen3-ngram) |
-| [Qwen3-8B](https://modelscope.cn/models/Qwen/Qwen3-8B) | [fvliang/Qwen3-8B-dart](https://modelscope.cn/models/fvliang/Qwen3-8B-dart) | [fvliang/dart-qwen3-ngram](https://modelscope.cn/models/fvliang/dart-qwen3-ngram) |
-| [Qwen3-14B](https://modelscope.cn/models/Qwen/Qwen3-14B) | [fvliang/Qwen3-14B-dart](https://modelscope.cn/models/fvliang/Qwen3-14B-dart) | [fvliang/dart-qwen3-ngram](https://modelscope.cn/models/fvliang/dart-qwen3-ngram) |
-| [Qwen3-32B](https://modelscope.cn/models/Qwen/Qwen3-32B) | [fvliang/Qwen3-32B-dart](https://modelscope.cn/models/fvliang/Qwen3-32B-dart) | [fvliang/dart-qwen3-ngram](https://modelscope.cn/models/fvliang/dart-qwen3-ngram) |
+<div align="center">
+<table>
+  <thead>
+    <tr>
+      <th>Base Model</th>
+      <th>DART Adapted Weights</th>
+      <th>N-gram Model</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://modelscope.cn/models/Qwen/Qwen3-1.7B">Qwen3-1.7B</a></td>
+      <td><a href="https://modelscope.cn/models/fvliang/Qwen3-1.7B-dart">fvliang/Qwen3-1.7B-dart</a></td>
+      <td><a href="https://modelscope.cn/models/fvliang/dart-qwen3-ngram">fvliang/dart-qwen3-ngram</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://modelscope.cn/models/Qwen/Qwen3-4B">Qwen3-4B</a></td>
+      <td><a href="https://modelscope.cn/models/fvliang/Qwen3-4B-dart">fvliang/Qwen3-4B-dart</a></td>
+      <td><a href="https://modelscope.cn/models/fvliang/dart-qwen3-ngram">fvliang/dart-qwen3-ngram</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://modelscope.cn/models/Qwen/Qwen3-8B">Qwen3-8B</a></td>
+      <td><a href="https://modelscope.cn/models/fvliang/Qwen3-8B-dart">fvliang/Qwen3-8B-dart</a></td>
+      <td><a href="https://modelscope.cn/models/fvliang/dart-qwen3-ngram">fvliang/dart-qwen3-ngram</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://modelscope.cn/models/Qwen/Qwen3-14B">Qwen3-14B</a></td>
+      <td><a href="https://modelscope.cn/models/fvliang/Qwen3-14B-dart">fvliang/Qwen3-14B-dart</a></td>
+      <td><a href="https://modelscope.cn/models/fvliang/dart-qwen3-ngram">fvliang/dart-qwen3-ngram</a></td>
+    </tr>
+    <tr>
+      <td><a href="https://modelscope.cn/models/Qwen/Qwen3-32B">Qwen3-32B</a></td>
+      <td><a href="https://modelscope.cn/models/fvliang/Qwen3-32B-dart">fvliang/Qwen3-32B-dart</a></td>
+      <td><a href="https://modelscope.cn/models/fvliang/dart-qwen3-ngram">fvliang/dart-qwen3-ngram</a></td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 ## Documentation
 
