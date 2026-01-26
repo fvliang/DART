@@ -1,0 +1,18 @@
+__pycache__/
+others/
+ref/
+.vscode/
+
+# Output files
+*_output*.json
+
+
+# Model answers
+**/model_answer/*.jsonl
+
+# Model judgments
+**/model_judgment/*.jsonl
+
+dart/evaluation/outputs
+dart/evaluation/outputs_qwen
+dart/evaluation/grid_search

@@ -1,0 +1,100 @@
+Metadata-Version: 2.4
+Name: dart
+Version: 0.1.0
+Summary: Add your description here
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: accelerate==0.26.0
+Requires-Dist: anthropic==0.5.0
+Requires-Dist: datasets>=4.4.1
+Requires-Dist: flask>=3.1.2
+Requires-Dist: fschat==0.2.31
+Requires-Dist: gradio==3.50.2
+Requires-Dist: modelscope>=1.33.0
+Requires-Dist: openai==0.28.0
+Requires-Dist: protobuf==3.19.0
+Requires-Dist: sentencepiece==0.1.99
+Requires-Dist: torch==2.8.0
+Requires-Dist: transformers==4.53.1
+Requires-Dist: triton>=3.2.0
+Requires-Dist: zstandard==0.25.0
+
+<div align="center">
+
+<img src="figs/logo.png" alt="DART" width="220">
+
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+
+</div>
+
+
+
+<h3 align="center">
+    DART: Diffusion-inspired Speculative Decoding for LLM
+</h3>
+
+---
+
+## Overview
+
+DART is a new speculative decoding approach for Large Language Models (LLMs) inference, which is inspired by the newly rise of dllm series like LLADA in 2025. 
+
+DART's drafting requires only a single forward pass of a single transformer layer to produce multiple logits simultaneously, and then uses an n-gram–based tree search to build the final draft token tree, resulting in extremely low drafting cost.
+
+## Key Features
+
+- **Single Forward Pass**: Produces multiple logits simultaneously with just one forward pass of single layer.
+- **N-gram Tree Search**: Uses n-gram–based tree search to build the final draft tree.
+- **Extremely Low Drafting Cost**: Results in extremely low drafting cost for efficient inference
+- **Diffusion-Inspired**: Inspired by the newly emerging dllm series like LLADA in 2025
+
+## Quick Start
+
+### Installation
+
+```bash
+git clone https://github.com/fvliang/DART.git
+cd DART
+curl -LsSf https://astral.sh/uv/install.sh | sh (optimal)
+uv sync
+uv pip install -e .
+```
+
+### Usage
+
+```python
+uv python main.py
+```
+
+## Documentation
+
+For detailed documentation, please refer to the [docs](docs/) directory.
+
+<!-- ## Citation
+
+If you find DART useful in your research, please cite:
+
+```bibtex
+@article{dart2025,
+  title={DART: Diffusion-inspired Speculative Decoding for LLM},
+  author={fuliang liu},
+  year={2025}
+}
+``` -->
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+This work is inspired by the dllm series, particularly LLADA.
+
+---
+
+<div align="center">
+
+**If you find this project helpful, please give it a ⭐ Star!**
+
+</div>

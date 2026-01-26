@@ -1,0 +1,1 @@
+To fastly test app.py, add "--use-small-ngram" to load a small ngram, if you persue accuracy, don't add "--use-small-ngram", which means using full.trie ngram by default (needs a large memory server and waits for a few minutes to load large ngram).
