@@ -27,6 +27,12 @@ DART is a new speculative decoding approach for Large Language Models (LLMs) inf
 
 DART's drafting requires only **a single forward pass** of **a single transformer layer** and a fast cpp-based tree search to build the draft token tree, resulting in extremely low drafting cost while preserving relatively high $\tau$ (Average Acceptance Length).
 
+## Speedup
+
+<div align="center">
+  <img src="figs/speed_up.png" alt="DART speedup results" width="100%" />
+</div>
+
 ## Key Features
 
 - **Fast drafting Forward**: Produces multiple logits simultaneously with 1 forward of 1 layer.
