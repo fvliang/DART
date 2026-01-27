@@ -208,6 +208,53 @@ class DartModel(nn.Module):
         if is_lm_head_output:
             return aux_hidden_states, outputs, lm_head_output
         return aux_hidden_states
+
+    def _ensure_kv_caches(self, base_required_len: int, dart_required_len: int):
+        """Ensure KV caches are initialized and large enough for this request."""
+        # Base model KV cache
+        base_needs_init = True
+        if hasattr(self, "past_key_values") and hasattr(self, "past_key_values_data"):
+            try:
+                base_capacity = min(storage.shape[3] for storage in self.past_key_values_data)
+            except Exception:
+                base_capacity = 0
+            base_needs_init = base_capacity < base_required_len
+            if not base_needs_init and hasattr(self, "current_length_data"):
+                self.current_length_data.zero_()
+        if base_needs_init:
+            (
+                self.past_key_values,
+                self.past_key_values_data,
+                self.current_length_data,
+            ) = initialize_past_key_values(self.base_model, max_length=base_required_len)
+
+        # DART layer KV cache
+        dart_needs_init = True
+        if hasattr(self, "dart_past_key_values") and hasattr(self, "dart_past_key_values_data"):
+            try:
+                dart_capacity = min(storage.shape[3] for storage in self.dart_past_key_values_data)
+            except Exception:
+                dart_capacity = 0
+            dart_needs_init = dart_capacity < dart_required_len
+            if not dart_needs_init and hasattr(self, "dart_current_length_data"):
+                self.dart_current_length_data.zero_()
+        if dart_needs_init:
+            (
+                self.dart_past_key_values,
+                self.dart_past_key_values_data,
+                self.dart_current_length_data,
+            ) = initialize_past_key_values_for_dart(
+                self.dart_layer, max_length=dart_required_len
+            )
+
+        return (
+            self.past_key_values,
+            self.past_key_values_data,
+            self.current_length_data,
+            self.dart_past_key_values,
+            self.dart_past_key_values_data,
+            self.dart_current_length_data,
+        )
     
     @torch.no_grad()
     def ar_generate(
@@ -327,39 +374,18 @@ class DartModel(nn.Module):
         else:
             logits_processor = None
 
-        # 2.1 Initialize the past key and value states for target LLM model
-        if hasattr(self, "past_key_values"):
-            past_key_values = self.past_key_values
-            past_key_values_data = self.past_key_values_data
-            current_length_data = self.current_length_data
-            # Reset the past key and value states
-            current_length_data.zero_()
-        else:
-            (
-                past_key_values,
-                past_key_values_data,
-                current_length_data,
-            ) = initialize_past_key_values(self.base_model, max_length = max_length + remain_total + self.SAFE_REMAIN)
-            self.past_key_values = past_key_values
-            self.past_key_values_data = past_key_values_data
-            self.current_length_data = current_length_data
-
-        # 2.2 Initialize the past key and value states for dart layer
-        if hasattr(self, "dart_past_key_values"):
-            dart_past_key_values = self.dart_past_key_values
-            dart_past_key_values_data = self.dart_past_key_values_data
-            dart_current_length_data = self.dart_current_length_data
-            # Reset the past key and value states
-            dart_current_length_data.zero_()
-        else:
-            (
-                dart_past_key_values,
-                dart_past_key_values_data,
-                dart_current_length_data,
-            ) = initialize_past_key_values_for_dart(self.dart_layer, max_length = max_length + self.dart_layer.draft_length + self.SAFE_REMAIN)
-            self.dart_past_key_values = dart_past_key_values
-            self.dart_past_key_values_data = dart_past_key_values_data
-            self.dart_current_length_data = dart_current_length_data
+        # 2. Initialize / resize KV caches if needed (warmup may allocate smaller caches)
+        input_len = int(input_ids.shape[1])
+        base_required_len = max(max_length, input_len + remain_total) + self.SAFE_REMAIN
+        dart_required_len = max(max_length, input_len + self.dart_layer.draft_length) + self.SAFE_REMAIN
+        (
+            past_key_values,
+            past_key_values_data,
+            current_length_data,
+            dart_past_key_values,
+            dart_past_key_values_data,
+            dart_current_length_data,
+        ) = self._ensure_kv_caches(base_required_len, dart_required_len)
 
         input_len = input_ids.shape[1]
         reset_dart_mode(self)
@@ -528,8 +554,7 @@ class DartModel(nn.Module):
         top_k=0,
         max_new_token_num=512,
         max_length=2048,
-        beam_width=20,
-        remain_total=80,
+        remain_total=60,
     ):
         """
         Args:
@@ -552,39 +577,18 @@ class DartModel(nn.Module):
         else:
             logits_processor = None
 
-        # 2.1 Initialize the past key and value states for target LLM model
-        if hasattr(self, "past_key_values"):
-            past_key_values = self.past_key_values
-            past_key_values_data = self.past_key_values_data
-            current_length_data = self.current_length_data
-            # Reset the past key and value states
-            current_length_data.zero_()
-        else:
-            (
-                past_key_values,
-                past_key_values_data,
-                current_length_data,
-            ) = initialize_past_key_values(self.base_model, max_length = max_length + remain_total + self.SAFE_REMAIN)
-            self.past_key_values = past_key_values
-            self.past_key_values_data = past_key_values_data
-            self.current_length_data = current_length_data
-
-        # 2.2 Initialize the past key and value states for dart layer
-        if hasattr(self, "dart_past_key_values"):
-            dart_past_key_values = self.dart_past_key_values
-            dart_past_key_values_data = self.dart_past_key_values_data
-            dart_current_length_data = self.dart_current_length_data
-            # Reset the past key and value states
-            dart_current_length_data.zero_()
-        else:
-            (
-                dart_past_key_values,
-                dart_past_key_values_data,
-                dart_current_length_data,
-            ) = initialize_past_key_values_for_dart(self.dart_layer, max_length = max_length + self.dart_layer.draft_length + self.SAFE_REMAIN)
-            self.dart_past_key_values = dart_past_key_values
-            self.dart_past_key_values_data = dart_past_key_values_data
-            self.dart_current_length_data = dart_current_length_data
+        # 2. Initialize / resize KV caches if needed (warmup may allocate smaller caches)
+        input_len = int(input_ids.shape[1])
+        base_required_len = max(max_length, input_len + remain_total) + self.SAFE_REMAIN
+        dart_required_len = max(max_length, input_len + self.dart_layer.draft_length) + self.SAFE_REMAIN
+        (
+            past_key_values,
+            past_key_values_data,
+            current_length_data,
+            dart_past_key_values,
+            dart_past_key_values_data,
+            dart_current_length_data,
+        ) = self._ensure_kv_caches(base_required_len, dart_required_len)
 
         input_len = input_ids.shape[1]
         reset_dart_mode(self)

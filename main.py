@@ -21,8 +21,7 @@ def parse_args():
     )
     parser.add_argument(
         "--ngram_model_name_or_path",
-        # default="fvliang/dart-qwen3-ngram",
-        default="/data3/DART/ngram/qwen3",
+        default="fvliang/dart-qwen3-ngram",
         help="Path or repo id of the ngram model.",
     )
     parser.add_argument(

@@ -122,12 +122,27 @@ def build_prompt(pure_history, tokenizer, template_name: str) -> str:
 
 
 def warmup(model: DartModel, template_name: str, device: torch.device) -> None:
-    prompt = build_prompt([["Hello", None]], model.tokenizer, template_name)
-    input_ids = model.tokenizer(
-        prompt, return_tensors="pt", add_special_tokens=False
-    ).input_ids.to(device)
-    for _ in model.dart_generate(input_ids, max_new_token_num=4):
-        break
+    """Run at least two short DART generations to warm up kernels and caches."""
+    warmup_histories = [
+        [["Hello!", None]],
+        [["Say hi in one short sentence.", None]],
+    ]
+    print("Running DART warmup (2 rounds)...")
+    start = time.time()
+    for pure_history in warmup_histories:
+        prompt = build_prompt(pure_history, model.tokenizer, template_name)
+        input_ids = model.tokenizer(
+            prompt, return_tensors="pt", add_special_tokens=False
+        ).input_ids.to(device)
+        # dart_generate returns the full output tensor (not a generator)
+        _ = model.dart_generate(
+            input_ids,
+            max_new_token_num=8,
+            max_length=max(args.max_length, 4096),
+            remain_total=60,
+        )
+    elapsed = time.time() - start
+    print(f"DART warmup completed in {elapsed:.2f}s.")
 
 
 def user(user_message, history, session_state):
@@ -246,7 +261,7 @@ def format_text_with_highlight(token_ids, tokenizer):
     return formatted_html, all_tokens_text
 
 
-def bot(history, temperature, top_p, top_k, beam_width, remain_total, model_type, session_state):
+def bot(history, temperature, top_p, top_k, remain_total, model_type, session_state):
     if not history:
         return history, "0.00 tokens/s", "0.00", session_state
     pure_history = session_state.get("pure_history", [])
@@ -269,7 +284,6 @@ def bot(history, temperature, top_p, top_k, beam_width, remain_total, model_type
             top_k=int(top_k),
             max_new_token_num=args.max_new_tokens,
             max_length=args.max_length,
-            beam_width=int(beam_width),
             remain_total=int(remain_total),
         ):
             forward_calls += 1
@@ -674,12 +688,6 @@ def build_demo():
                     gr.HTML('<div class="divider"></div>')
                     
                     gr.Markdown("### 🌳 Tree Search Settings", elem_classes="panel-title")
-                    beam_width = gr.Slider(
-                        minimum=1, maximum=64, step=1,
-                        label="🔍 Beam Width",
-                        value=10,
-                        info="Search beam width"
-                    )
                     remain_total = gr.Slider(
                         minimum=1, maximum=256, step=1,
                         label="🌿 Remain Total",
@@ -724,14 +732,14 @@ def build_demo():
             user, [msg, chatbot, state], [msg, chatbot, state], queue=True
         ).then(
             bot,
-            [chatbot, temperature, top_p, top_k, beam_width, remain_total, model_type, state],
+            [chatbot, temperature, top_p, top_k, remain_total, model_type, state],
             [chatbot, speed_box, compression_box, state],
         )
         send_event = send_button.click(
             user, [msg, chatbot, state], [msg, chatbot, state], queue=True
         ).then(
             bot,
-            [chatbot, temperature, top_p, top_k, beam_width, remain_total, model_type, state],
+            [chatbot, temperature, top_p, top_k, remain_total, model_type, state],
             [chatbot, speed_box, compression_box, state],
         )
         regenerate_event = regenerate_button.click(
@@ -741,7 +749,7 @@ def build_demo():
             queue=True,
         ).then(
             bot,
-            [chatbot, temperature, top_p, top_k, beam_width, remain_total, model_type, state],
+            [chatbot, temperature, top_p, top_k, remain_total, model_type, state],
             [chatbot, speed_box, compression_box, state],
         )
         clear_button.click(
@@ -821,7 +829,7 @@ shared_base_model.eval()
 print("Shared base model loaded successfully.")
 
 print("Loading Ngram model...")
-ngram_model = DartModel.ngram_from_pretrained(args.ngram_model_path, args.use_small_ngram)
+ngram_model = DartModel.ngram_from_pretrained(args.ngram_model_name_or_path, args.use_small_ngram)
 
 
 # Load DART model with shared base model
@@ -835,7 +843,7 @@ model = DartModel.from_pretrained_with_base(
 ).to(device)
 model.eval()
 print("DART model loaded successfully.")
-# warmup(model, args.template_name, device)
+warmup(model, args.template_name, device)
 
 eagle_model = None
 if args.compare_eagle3:
@@ -858,4 +866,3 @@ demo.launch(
     server_name="0.0.0.0" if args.listen else None,
     server_port=args.server_port,
 )
-
