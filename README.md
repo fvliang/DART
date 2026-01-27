@@ -44,10 +44,10 @@ DART's drafting requires only **a single forward pass** of **a single transforme
 
 ## Key Features
 
-- **Fast drafting Forward**: Produces multiple logits simultaneously with 1 forward of 1 layer.
+- **Fast Drafting Forward**: Produces multiple logits simultaneously with 1 forward of 1 layer.
 - **Fast Tree Search**: Uses n-gram–based tree search to build the final draft tree (C++ based).
 - **Low Drafting Cost**: Results in extremely low drafting cost for efficient inference.
-- **relatively high $\tau$**: Average Acceptance Length is competitive with EAGLE3.
+- **Relatively High $\tau$**: Average Acceptance Length is competitive with EAGLE3.
 
 ## Quick Start
 
