@@ -33,6 +33,12 @@ DART's drafting requires only **a single forward pass** of **a single transforme
   <img src="figs/speed_up_transparent.png" alt="DART speedup results" width="100%" />
 </div>
 
+## Comparison (GIF)
+
+<div align="center">
+  <img src="figs/GIF.gif" alt="DART comparison animation" width="100%" />
+</div>
+
 ## Key Features
 
 - **Fast drafting Forward**: Produces multiple logits simultaneously with 1 forward of 1 layer.
