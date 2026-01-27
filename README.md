@@ -16,7 +16,7 @@
 </h3>
 
 <p align="center">
-  <a href="#">[Paper will come soon]</a>
+  <a href="https://fvliang.github.io/pdf/DART.pdf">[Paper of DART]</a>
 </p>
 
 ---
