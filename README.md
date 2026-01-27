@@ -30,7 +30,10 @@ DART's drafting requires only **a single forward pass** of **a single transforme
 ## Speedup
 
 <div align="center">
-  <img src="figs/speed_up_transparent.png" alt="DART speedup results" width="100%" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="figs/speed_up_dark.png" />
+    <img src="figs/speed_up.png" alt="DART speedup results" width="100%" />
+  </picture>
 </div>
 
 ## Speedup Comparison
