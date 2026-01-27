@@ -21,30 +21,11 @@ PYBIND11_MODULE(cpp_search, m) {
           "")
       .def(
           "search",
-          py::overload_cast<
-							size_t,
-							const std::vector<std::vector<token_t>>&,
-							const std::vector<std::vector<prob_t>>&,
-							const ngram::TrieNgram&,
-							const std::vector<token_t>&>(&Searcher::search),
+          &Searcher::search,
           py::arg("draft_length"),
           py::arg("topk_tokens"),
           py::arg("topk_logit_scores"),
           py::arg("ngram_model"),
           py::arg("prompt_tokens"),
-          "")
-			.def(
-					"search",
-					py::overload_cast<
-							size_t,
-							const std::vector<std::vector<token_t>>&,
-							const std::vector<std::vector<prob_t>>&,
-							const ngram::ACANgram&,
-							const std::vector<token_t>&>(&Searcher::search),
-					py::arg("draft_length"),
-					py::arg("topk_tokens"),
-					py::arg("topk_logit_scores"),
-					py::arg("ngram_model"),
-					py::arg("prompt_tokens"),
-					"");
+          "");
 }

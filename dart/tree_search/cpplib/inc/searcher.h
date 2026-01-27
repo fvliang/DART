@@ -39,13 +39,6 @@ public:
          const std::vector<std::vector<prob_t>>& topk_logit_scores,
          const ngram::TrieNgram& ngram_model,
          const std::vector<token_t>& prompt_tokens);
-  
-  std::tuple<draft_tokens_t, retrieve_indices_t, tree_mask_t, tree_positions_t>
-  search(size_t draft_length,
-         const std::vector<std::vector<token_t>>& topk_tokens,
-         const std::vector<std::vector<prob_t>>& topk_logit_scores,
-         const ngram::ACANgram& ngram_model,
-         const std::vector<token_t>& prompt_tokens);
 };
 
 } // namespace searcher

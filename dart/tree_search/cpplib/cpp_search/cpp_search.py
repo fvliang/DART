@@ -12,7 +12,6 @@ cpp_search = load(
         f"{_abs_path}/search_binding.cpp",
         f"{_abs_path}/searcher.cpp",
         f"{_abs_path}/../cpp_ngram/trie_ngram.cpp",
-        f"{_abs_path}/../cpp_ngram/aca_ngram.cpp",
         f"{_abs_path}/../cpp_utils/buffered_file_reader.cpp",
     ],
     extra_cflags=[
