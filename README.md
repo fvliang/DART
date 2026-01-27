@@ -3,14 +3,16 @@
 <img src="figs/logo.png" alt="DART" width="220">
 
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![Version](https://img.shields.io/badge/version-0.0.1-orange.svg)](#)
+[![Maintained](https://img.shields.io/badge/maintained-yes-brightgreen.svg)](#)
+[![Contributions](https://img.shields.io/badge/contributions-welcome-green.svg)](#)
 
 </div>
 
 
 
 <h3 align="center">
-    DART: Diffusion-Inspired Speculative Decoding for Fast LLM Inference
+    Diffusion-Inspired Speculative Decoding for Fast LLM Inference
 </h3>
 
 ---
