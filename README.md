@@ -40,11 +40,99 @@ uv sync
 uv pip install -e .
 ```
 
-### Usage
-a simple demo.
-```python
-uv python main.py
+### Inference
+
+The inference code automatically uses `device_map="auto"` when loading the base model, so model weights can be sharded across multiple GPUs when needed.
+
+#### With UI (Gradio App)
+
+We provide a Gradio web interface in `dart/app/app.py`. The easiest way is to run one of the prepared scripts:
+
+```bash
+bash dart/app/qwen3_1d7b_app.sh
 ```
+
+You can also launch the app directly:
+
+```bash
+uv python dart/app/app.py \
+  --base-model-name-or-path Qwen/Qwen3-4B \
+  --dart-model-name-or-path fvliang/qwen4b-dart \
+  --ngram-model-name-or-path fvliang/dart-qwen3-ngram \
+  --template-name qwen \
+  --device cuda \
+  --max-new-tokens 2048 \
+  --max-length 4096 \
+  --use-small-ngram \
+  --listen \
+  --server-port 30000
+```
+
+After the model is fully loaded, Gradio will print a local URL in the terminal that you can open in your browser.
+
+Tip: `--use-small-ngram` is great for fast testing. For best accuracy, omit it and load the full n-gram trie (this uses more memory and takes longer to load).
+
+#### With Code (`main.py` / Python API)
+
+You can use DART programmatically via `DartModel.from_pretrained(...)` and `dart_generate(...)`, similar to Hugging Face `generate`:
+
+```python
+import torch
+from dart.model.dart_model import DartModel
+from dart.model.template import TEMPLATE_REGISTRY
+
+base_model_path = "Qwen/Qwen3-1.7B"
+dart_model_path = "fvliang/qwen1.7b-dart"
+ngram_model_path = "fvliang/dart-qwen3-ngram"
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+model = DartModel.from_pretrained(
+    base_model_name_or_path=base_model_path,
+    dart_model_name_or_path=dart_model_path,
+    ngram_model_name_or_path=ngram_model_path,
+    torch_dtype=torch.float16,
+    low_cpu_mem_usage=True,
+    device_map="auto",
+    is_small_ngram=True,
+).to(device)
+model.eval()
+
+template = TEMPLATE_REGISTRY.get("qwen")
+messages = [
+    {"role": "system", "content": template.system_prompt},
+    {"role": "user", "content": "Hello! Please introduce DART briefly."},
+]
+prompt = model.tokenizer.apply_chat_template(
+    messages,
+    tokenize=False,
+    add_generation_prompt=True,
+    enable_thinking=False,
+)
+
+input_ids = model.tokenizer(
+    prompt, return_tensors="pt", add_special_tokens=False
+).input_ids.to(device)
+
+output_ids = model.dart_generate(
+    input_ids,
+    temperature=0.7,
+    top_p=0.9,
+    top_k=50,
+    max_new_token_num=512,
+    max_length=2048,
+)
+
+output = model.tokenizer.decode(
+    output_ids[0],
+    skip_special_tokens=True,
+    spaces_between_special_tokens=False,
+    clean_up_tokenization_spaces=True,
+)
+print(output)
+```
+
+Note: Qwen / Llama chat models require the correct chat template. Using the wrong template can cause abnormal outputs and hurt speculative decoding performance. The `--template-name` flag (UI) and `TEMPLATE_REGISTRY` (code) help keep this consistent.
 
 ## Model Weights (HuggingFace)
 
@@ -53,7 +141,7 @@ uv python main.py
   <thead>
     <tr>
       <th>Base Model</th>
-      <th>DART Adapted Weights</th>
+      <th>DART Weights</th>
       <th>N-gram Model</th>
     </tr>
   </thead>
@@ -94,7 +182,7 @@ uv python main.py
   <thead>
     <tr>
       <th>Base Model</th>
-      <th>DART Adapted Weights</th>
+      <th>DART Weights</th>
       <th>N-gram Model</th>
     </tr>
   </thead>
@@ -128,9 +216,9 @@ uv python main.py
 </table>
 </div>
 
-## Documentation
+<!-- ## Documentation
 
-For detailed documentation, please refer to the [docs](docs/) directory.
+For detailed documentation, please refer to the [docs](docs/) directory. -->
 
 <!-- ## Citation
 
