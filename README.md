@@ -39,7 +39,7 @@ DART's drafting requires only **a single forward pass** of **a single transforme
 ## Speedup Comparison
 
 <div align="center">
-  <img src="figs/GIF.gif" alt="DART comparison animation" width="100%" />
+  <img src="figs/gif.gif" alt="DART comparison animation" width="100%" />
 </div>
 
 ## Key Features
