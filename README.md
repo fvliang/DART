@@ -23,10 +23,10 @@ DART's drafting requires only **a single forward pass** of **a single transforme
 
 ## Key Features
 
-- **Single Forward Pass**: Produces multiple logits simultaneously with 1 forward of 1 layer.
-- **N-gram Tree Search**: Uses n-gram–based tree search to build the final draft tree (C++ based).
-- **Extremely Low Drafting Cost**: Results in extremely low drafting cost for efficient inference
-- **Diffusion-Inspired**: Inspired by the newly emerging dllm series like LLADA in 2025
+- **Fast drafting Forward**: Produces multiple logits simultaneously with 1 forward of 1 layer.
+- **Fast Tree Search**: Uses n-gram–based tree search to build the final draft tree (C++ based).
+- **Low Drafting Cost**: Results in extremely low drafting cost for efficient inference.
+- **relatively high $\tau$**: Average Acceptance Length is competitive with EAGLE3.
 
 ## Quick Start
 
@@ -128,8 +128,6 @@ uv pip install -e .
 
 ### Inference
 
-The inference code automatically uses `device_map="auto"` when loading the base model, so model weights can be sharded across multiple GPUs when needed.
-
 #### With UI (Gradio App)
 
 We provide a Gradio web interface in `dart/app/app.py`. The easiest way is to run one of the prepared scripts:
@@ -217,8 +215,6 @@ output = model.tokenizer.decode(
 )
 print(output)
 ```
-
-Note: Qwen / Llama chat models require the correct chat template. Using the wrong template can cause abnormal outputs and hurt speculative decoding performance. The `--template-name` flag (UI) and `TEMPLATE_REGISTRY` (code) help keep this consistent.
 
 
 <!-- ## Documentation
