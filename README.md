@@ -15,6 +15,10 @@
     Diffusion-Inspired Speculative Decoding for Fast LLM Inference
 </h3>
 
+<p align="center">
+  <a href="#">[Paper will come soon]</a>
+</p>
+
 ---
 
 ## Overview
