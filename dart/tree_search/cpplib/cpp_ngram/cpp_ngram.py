@@ -11,7 +11,6 @@ cpp_ngram = load(
     sources=[
         f"{_abs_path}/ngram_binding.cpp",
         f"{_abs_path}/trie_ngram.cpp",
-        f"{_abs_path}/aca_ngram.cpp",
         f"{_abs_path}/../cpp_utils/buffered_file_reader.cpp",
     ],
     extra_cflags=[
@@ -25,21 +24,3 @@ cpp_ngram = load(
 def load_cpp_ngram():
     return cpp_ngram    
 
-# main function
-if __name__ == "__main__":
-
-    ngram_cpp = load_cpp_ngram()
-    conversation = [1, 2, 3, 2, 2, 1, 3, 2, 3, 1, 2]
-    ngram = ngram_cpp.TrieNgram(3)  # order=3
-    ngram.add_conversation(conversation)
-    ngram.save("test_ngram.dat")
-    ngram = ngram_cpp.TrieNgram.load("test_ngram.dat")
-
-    conversation2 = [1, 2, 3]
-    ngram2 = ngram_cpp.TrieNgram(3)  # order=3
-    ngram2.add_conversation(conversation2)
-    ngram.add_all(ngram2)
-
-    print(ngram.get_probability([1, 2], [1, 2, 3]))
-    print(ngram.get_probability([2], [1, 2, 3]))
-    print(ngram.get_probability([2, 3], [1, 2, 3]))
