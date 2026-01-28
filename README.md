@@ -173,6 +173,24 @@ uv python dart/app/app.py \
   --server-port 30000
 ```
 
+You could compare DART with EAGLE3 in a single UI (target model is shared by DART and EAGLE3):
+
+```bash
+uv python dart/app/app.py \
+  --base-model-name-or-path Qwen/Qwen3-4B \
+  --dart-model-name-or-path fvliang/qwen4b-dart \
+  --ngram-model-name-or-path fvliang/dart-qwen3-ngram \
+  --template-name qwen \
+  --device cuda \
+  --max-new-tokens 2048 \
+  --max-length 4096 \
+  --use-small-ngram \
+  --compare-eagle3 \
+  --eagle3-model-name-or-path AngelSlim/Qwen3-4B_eagle3 \
+  --listen \
+  --server-port 30000
+```
+
 After the model is fully loaded, Gradio will print a local URL in the terminal that you can open in your browser.
 
 Tip: `--use-small-ngram` is great for fast testing. For best accuracy, omit it and load the full n-gram trie (this uses more memory and takes longer to load).
