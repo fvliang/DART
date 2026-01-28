@@ -16,7 +16,7 @@
 </h3>
 
 <p align="center">
-  <a href="https://fvliang.github.io/pdf/DART.pdf">[Paper of DART]</a>
+  <a href="https://arxiv.org/pdf/2601.19278">[Paper of DART]</a>
 </p>
 
 ---
@@ -242,17 +242,21 @@ print(output)
 
 For detailed documentation, please refer to the [docs](docs/) directory. -->
 
-<!-- ## Citation
+## Citation
 
 If you find DART useful in your research, please cite:
 
 ```bibtex
-@article{dart2025,
-  title={DART: Diffusion-inspired Speculative Decoding for LLM},
-  author={fuliang liu},
-  year={2025}
+@misc{liu2026dart,
+      title={DART: Diffusion-Inspired Speculative Decoding for Fast LLM Inference}, 
+      author={Fuliang Liu and Xue Li and Ketai Zhao and Yinxi Gao and Ziyan Zhou and Zhonghui Zhang and Zhibin Wang and Wanchun Dou and Sheng Zhong and Chen Tian},
+      year={2026},
+      eprint={2601.19278},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2601.19278}, 
 }
-``` -->
+```
 
 ## License
 
