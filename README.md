@@ -265,14 +265,11 @@ For detailed documentation, please refer to the [docs](docs/) directory. -->
 If you find DART useful in your research, please cite:
 
 ```bibtex
-@misc{liu2026dart,
-      title={DART: Diffusion-Inspired Speculative Decoding for Fast LLM Inference}, 
-      author={Fuliang Liu and Xue Li and Ketai Zhao and Yinxi Gao and Ziyan Zhou and Zhonghui Zhang and Zhibin Wang and Wanchun Dou and Sheng Zhong and Chen Tian},
-      year={2026},
-      eprint={2601.19278},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL},
-      url={https://arxiv.org/abs/2601.19278}, 
+@article{liu2026dart,
+  title={DART: Diffusion-Inspired Speculative Decoding for Fast LLM Inference},
+  author={Liu, Fuliang and Li, Xue and Zhao, Ketai and Gao, Yinxi and Zhou, Ziyan and Zhang, Zhonghui and Wang, Zhibin and Dou, Wanchun and Zhong, Sheng and Tian, Chen},
+  journal={arXiv preprint arXiv:2601.19278},
+  year={2026}
 }
 ```
 
