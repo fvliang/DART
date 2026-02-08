@@ -295,7 +295,7 @@ def bot(history, temperature, top_p, top_k, remain_total, model_type, session_st
             accumulated_html_text += formatted_html
             accumulated_text += plain_text
             # For baseline model, each forward call generates one token
-            total_tokens += output["accept_length"] + 1
+            total_tokens += output["accept_length"]
             # 使用 HTML 格式的文本显示在 UI 中
             history[-1][1] = accumulated_html_text
             # pure_history 中保存纯文本（用于后续的 prompt 构建）
