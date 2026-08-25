@@ -12,7 +12,7 @@
 
 
 <h3 align="center">
-    Diffusion-Inspired Speculative Decoding for Fast LLM Inference
+    DART: Low-Latency Parallel Drafting with Continuity-Aware Tree Pruning for Speculative Decoding
 </h3>
 
 <p align="center">
