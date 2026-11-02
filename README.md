@@ -265,6 +265,16 @@ For detailed documentation, please refer to the [docs](docs/) directory. -->
 If you find DART useful in your research, please cite:
 
 ```bibtex
+@inproceedings{liu2026dart,
+  title = "{DART}: Low-Latency Parallel Drafting with Continuity-Aware Tree Pruning for Speculative Decoding",
+  author = "Liu, Fuliang and Li, Xue and Zhao, Ketai and Gao, Yinxi and Zhou, Ziyan and Zhang, Zhonghui and Dou, Wanchun and Zhong, Sheng and Wang, Zhibin and Tian, Chen",
+  booktitle = "Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing",
+  month = oct,
+  year = "2026",
+  address = "Budapest, Hungary",
+  pages = "11316--11331",
+  ISBN = "979-8-89176-459-0"
+}
 @article{liu2026dart,
   title={DART: Diffusion-Inspired Speculative Decoding for Fast LLM Inference},
   author={Liu, Fuliang and Li, Xue and Zhao, Ketai and Gao, Yinxi and Zhou, Ziyan and Zhang, Zhonghui and Wang, Zhibin and Dou, Wanchun and Zhong, Sheng and Tian, Chen},
